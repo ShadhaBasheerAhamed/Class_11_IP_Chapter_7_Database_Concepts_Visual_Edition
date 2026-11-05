@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class XI IP | Chapter 7 – Database Concepts</title>
+<style>
+:root{--ink:#17233b;--muted:#60708b;--paper:#f6f8fc;--card:#fff;--blue:#3157d5;--teal:#0e9b91;--gold:#f3b544;--pink:#f16d91;--line:#e4e9f2;--shadow:0 12px 35px #20365d12}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial}
+header{background:linear-gradient(125deg,#172b55,#3157d5 60%,#11a69a);color:white;padding:34px 22px 28px}
+.hero{max-width:1150px;margin:auto}.eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:12px;font-weight:800;opacity:.8}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:10px 0}.hero p{max-width:760px;color:#e9efff;margin:12px 0 18px}
+.pills{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid #ffffff55;border-radius:30px;padding:5px 12px;font-size:12px}
+.layout{max-width:1150px;margin:22px auto;padding:0 16px;display:grid;grid-template-columns:245px 1fr;gap:20px}
+nav{position:sticky;top:12px;align-self:start;background:white;border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow);max-height:calc(100vh - 24px);overflow:auto}
+nav b{display:block;margin:2px 0 10px}nav a{display:block;text-decoration:none;color:#465675;padding:8px 10px;border-radius:9px;font-size:13px}nav a:hover{background:#eef2ff;color:var(--blue)}
+main{min-width:0}.section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow);scroll-margin-top:16px}
+h2{font-size:24px;margin:0 0 12px}h3{font-size:18px;margin:18px 0 7px;color:#263b69}h4{margin:0 0 6px}
+.lead{color:var(--muted);margin-top:-4px}.callout{border-left:4px solid var(--teal);background:#edfbf9;padding:12px 14px;border-radius:8px;margin:12px 0}
+.warn{border-left-color:var(--gold);background:#fff8e9}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:12px 0}
+.tile{border:1px solid var(--line);border-radius:13px;padding:14px;background:#fff}.tile p{margin:5px 0;color:var(--muted);font-size:13px}
+.tag{display:inline-block;border-radius:20px;background:#eef2ff;color:#3157d5;padding:2px 9px;font-size:11px;font-weight:800}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;overflow:hidden;border-radius:10px}th{background:#263b69;color:white;text-align:left}td,th{padding:9px;border:1px solid #e2e7f0}tr:nth-child(even) td{background:#f6f8fc}
+.diagram{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:15px;background:#f5f7fc;border-radius:14px;margin:12px 0}
+.db{background:#fff;border:2px solid #b8c6e6;border-radius:10px;padding:12px;text-align:center;min-width:125px;font-weight:700}.arrow{font-size:24px;color:var(--teal)}
+.step{display:flex;gap:12px;margin:10px 0}.num{flex:0 0 30px;height:30px;border-radius:50%;background:#e9efff;color:var(--blue);display:grid;place-items:center;font-weight:800}
+button{border:0;background:var(--blue);color:white;border-radius:9px;padding:9px 14px;font-weight:700;cursor:pointer}button.secondary{background:#eaf0ff;color:#294bb6}button.teal{background:var(--teal)}button:focus,input:focus{outline:3px solid #9db1ff}
+.quiz{border:1px solid var(--line);padding:14px;border-radius:12px;margin:12px 0}.quiz p{font-weight:700;margin:0 0 8px}.quiz label{display:block;padding:5px 8px;border-radius:7px;cursor:pointer}.quiz label:hover{background:#f1f4fc}.feedback{font-weight:700;margin-top:8px;font-size:13px}
+.answer{display:none;background:#edfbf9;padding:10px;border-radius:8px;margin-top:8px}.answer.show{display:block}
+input[type=text]{padding:9px;border:1px solid #ccd5e5;border-radius:8px;max-width:220px}
+footer{text-align:center;color:var(--muted);padding:24px;font-size:12px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}nav{position:relative;top:auto;max-height:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px}nav b{grid-column:1/-1}.section{padding:17px}}
+@media print{nav,button,.pills{display:none!important}.layout{display:block;margin:0}.section{box-shadow:none;break-inside:avoid}body{background:white}}
+
+.visual-panel{margin:16px 0;padding:14px;border:1px solid #dfe7f5;border-radius:16px;background:linear-gradient(135deg,#f8faff,#eef7ff);overflow:hidden}
+.visual-panel svg{display:block;width:100%;height:auto;max-height:300px}.visual-panel figcaption{font-size:12px;color:#61718c;text-align:center;margin-top:7px}
+.visual-title{font-size:13px;font-weight:800;color:#3157d5;margin:0 0 8px}
+.visual-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.visual-card{border:1px solid #e1e7f1;background:#fff;border-radius:14px;padding:12px;min-width:0}.visual-card svg{width:100%;height:auto}
+.tip-strip{display:flex;gap:10px;align-items:flex-start;background:#fff7e8;border:1px solid #f4dfb7;border-radius:12px;padding:11px 13px;margin:12px 0}
+@media(max-width:600px){.visual-pair{grid-template-columns:1fr}.visual-panel{padding:9px}}
+@media print{.visual-panel,.visual-card{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header><div class="hero">
+<div class="eyebrow">Class XI · Informatics Practices · Chapter 7</div>
+<h1>Database Concepts</h1>
+<p>A quick, visual, textbook-aligned lesson. Learn the ideas through one familiar example: a school's Student–Guardian–Attendance database.</p>
+<div class="pills"><span class="pill">7.1 Introduction</span><span class="pill">7.2 File System</span><span class="pill">7.3 DBMS</span><span class="pill">7.4 Relational Model</span><span class="pill">7.5 Keys</span></div>
+</div></header>
+<div class="layout">
+<nav><b>Jump to a topic</b>
+<a href="#start">1. Big picture</a><a href="#intro">2. Introduction</a><a href="#files">3. File system</a><a href="#limits">4. File system limitations</a><a href="#dbms">5. DBMS</a><a href="#schema">6. Schema & database terms</a><a href="#relational">7. Relational data model</a><a href="#properties">8. Relation properties</a><a href="#keys">9. Keys</a><a href="#revision">10. One-page revision</a><a href="#case-study">11. Visual case study</a><a href="#practice">12. Quick test</a><a href="#bookback">13. Book-back answers</a>
+</nav>
+<main>
+<section class="section" id="start">
+<figure class="visual-panel"><div class="visual-title">HOW A SCHOOL DATABASE WORKS</div>
+<svg viewBox="0 0 760 205" role="img" aria-label="Teacher sends a query to DBMS, DBMS accesses related database tables and returns results">
+<defs><marker id="arrowdb" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6" fill="#3157d5"/></marker></defs>
+<rect x="10" y="38" width="150" height="125" rx="15" fill="#e9efff" stroke="#91a7ed" stroke-width="2"/><text x="85" y="70" text-anchor="middle" font-size="17" font-weight="bold" fill="#294bb6">USERS</text><circle cx="58" cy="102" r="14" fill="#f3b544"/><path d="M35 145 Q58 112 81 145" fill="#f3b544"/><circle cx="111" cy="102" r="14" fill="#0e9b91"/><path d="M88 145 Q111 112 134 145" fill="#0e9b91"/><text x="85" y="155" text-anchor="middle" font-size="10" fill="#40567e">Teacher / Office</text>
+<path d="M165 100 H270" stroke="#3157d5" stroke-width="4" marker-end="url(#arrowdb)"/><text x="216" y="84" text-anchor="middle" font-size="12" fill="#3157d5">Query</text>
+<rect x="280" y="48" width="195" height="105" rx="15" fill="#e8faf7" stroke="#63b9ae" stroke-width="2"/><rect x="307" y="68" width="141" height="36" rx="8" fill="#0e9b91"/><text x="377" y="91" text-anchor="middle" fill="white" font-size="15" font-weight="bold">DBMS SOFTWARE</text><text x="377" y="125" text-anchor="middle" font-size="12" fill="#326d68">Processes the request</text>
+<path d="M480 100 H580" stroke="#3157d5" stroke-width="4" marker-end="url(#arrowdb)"/><text x="530" y="84" text-anchor="middle" font-size="12" fill="#3157d5">Access</text>
+<rect x="590" y="18" width="160" height="165" rx="14" fill="white" stroke="#c8d3e8" stroke-width="2"/><text x="670" y="42" text-anchor="middle" font-size="15" font-weight="bold" fill="#263b69">DATABASE</text>
+<rect x="610" y="54" width="120" height="29" rx="6" fill="#3157d5"/><text x="670" y="73" text-anchor="middle" fill="white" font-size="12">STUDENT</text><rect x="610" y="91" width="120" height="29" rx="6" fill="#0e9b91"/><text x="670" y="110" text-anchor="middle" fill="white" font-size="12">GUARDIAN</text><rect x="610" y="128" width="120" height="29" rx="6" fill="#d58b24"/><text x="670" y="147" text-anchor="middle" fill="white" font-size="12">ATTENDANCE</text>
+</svg><figcaption>Users ask questions; DBMS accesses the required data and returns the result.</figcaption></figure>
+<h2>Start here: understand the whole chapter</h2><p class="lead">Imagine your school keeps student details and daily attendance.</p>
+<div class="diagram"><div class="db">Student details<br><small>Roll no, name, DOB</small></div><span class="arrow">→</span><div class="db">Database / DBMS<br><small>Stores + manages</small></div><span class="arrow">←</span><div class="db">Teacher / Office<br><small>Ask for information</small></div></div>
+<div class="callout"><b>Core idea:</b> A file is simply a place to store data. A DBMS is software that helps create, organise, update, retrieve and manage related data in a database.</div>
+<h3>Five-part learning route</h3><div class="grid">
+<div class="tile"><span class="tag">7.1–7.2</span><h4>Why do we need it?</h4><p>Manual records and ordinary files become difficult to manage.</p></div>
+<div class="tile"><span class="tag">7.2.1</span><h4>What goes wrong?</h4><p>Six limitations of the file system.</p></div>
+<div class="tile"><span class="tag">7.3</span><h4>What is the solution?</h4><p>DBMS, schema, constraints, queries and operations.</p></div>
+<div class="tile"><span class="tag">7.4</span><h4>How is data organised?</h4><p>Tables, rows, columns and relational terminology.</p></div>
+<div class="tile"><span class="tag">7.5</span><h4>How are records identified?</h4><p>Candidate, primary, composite and foreign keys.</p></div></div></section>
+
+<section class="section" id="intro"><h2>7.1 Introduction</h2><p>Schools maintain information about students, attendance and guardians. A class teacher may mark <b>P</b> for Present and <b>A</b> for Absent every working day.</p>
+<table><tr><th>Roll No.</th><th>Student</th><th>Attendance date</th><th>Status</th></tr><tr><td>01</td><td>Aarav</td><td>01-09-2026</td><td>P</td></tr><tr><td>02</td><td>Diya</td><td>01-09-2026</td><td>A</td></tr><tr><td>01</td><td>Aarav</td><td>02-09-2026</td><td>P</td></tr></table>
+<p>For 50 students and 26 working days, the teacher may have to maintain <b>50 × 26 = 1,300 attendance entries</b> in a month. As data grows, manual record keeping becomes tedious.</p>
+<h3>Problems with manual registers</h3><ul><li>Re-entering student details when promoted to the next class.</li><li>Inconsistent spelling or skipped student records.</li><li>Loss or damage of the register.</li><li>Calculation errors while preparing attendance totals.</li></ul>
+<h3>Why computerised records?</h3><ul><li>Copy student details into a new class file.</li><li>Search student or guardian information.</li><li>Add details when a new student joins.</li><li>Modify student or guardian details.</li><li>Delete records when a student leaves.</li></ul>
+<div class="callout"><b>Remember:</b> Computerised files make storing and changing data easier, but a traditional file system still has limitations. DBMS helps overcome them.</div></section>
+
+<section class="section" id="files">
+<div class="visual-pair">
+<div class="visual-card"><h4>❌ File system</h4><svg viewBox="0 0 320 160" role="img" aria-label="Two separate files repeat student details"><rect x="5" y="10" width="145" height="72" rx="9" fill="#fff1ed" stroke="#d96e58" stroke-width="2"/><text x="77" y="34" text-anchor="middle" font-size="13" font-weight="bold" fill="#9a4434">STUDENT FILE</text><text x="77" y="55" text-anchor="middle" font-size="11" fill="#704b45">Name · Roll no.</text><text x="77" y="70" text-anchor="middle" font-size="11" fill="#704b45">Guardian details</text><rect x="170" y="10" width="145" height="72" rx="9" fill="#fff1ed" stroke="#d96e58" stroke-width="2"/><text x="242" y="34" text-anchor="middle" font-size="13" font-weight="bold" fill="#9a4434">ATTENDANCE</text><text x="242" y="55" text-anchor="middle" font-size="11" fill="#704b45">Date · Roll no.</text><text x="242" y="70" text-anchor="middle" font-size="11" fill="#704b45">Name repeated</text><path d="M150 45 H170" stroke="#d96e58" stroke-width="3" stroke-dasharray="4 3"/><text x="160" y="105" text-anchor="middle" font-size="11" fill="#b34b36">Duplicate data</text><rect x="25" y="120" width="270" height="30" rx="7" fill="#fff1ed"/><text x="160" y="140" text-anchor="middle" font-size="11" fill="#9a4434">Mismatch · Repetition · Difficult search</text></svg></div>
+<div class="visual-card"><h4>✅ Relational database</h4><svg viewBox="0 0 320 160" role="img" aria-label="Student and guardian tables linked by GUID"><rect x="5" y="10" width="145" height="72" rx="9" fill="#e9efff" stroke="#829ce8" stroke-width="2"/><text x="77" y="34" text-anchor="middle" font-size="13" font-weight="bold" fill="#294bb6">STUDENT</text><text x="77" y="55" text-anchor="middle" font-size="11" fill="#40567e">RollNo · Name</text><text x="77" y="70" text-anchor="middle" font-size="11" fill="#40567e">GUID (FK)</text><rect x="170" y="10" width="145" height="72" rx="9" fill="#e8faf7" stroke="#63b9ae" stroke-width="2"/><text x="242" y="34" text-anchor="middle" font-size="13" font-weight="bold" fill="#087e70">GUARDIAN</text><text x="242" y="55" text-anchor="middle" font-size="11" fill="#326d68">GUID (PK) · Name</text><text x="242" y="70" text-anchor="middle" font-size="11" fill="#326d68">Phone</text><path d="M150 45 H170" stroke="#0e9b91" stroke-width="3"/><text x="160" y="105" text-anchor="middle" font-size="11" fill="#087e70">GUID connects them</text><rect x="25" y="120" width="270" height="30" rx="7" fill="#e8faf7"/><text x="160" y="140" text-anchor="middle" font-size="11" fill="#087e70">Organised · Linked · Less repetition</text></svg></div>
+</div>
+<h2>7.2 File System</h2>
+<div class="callout"><b>Definition:</b> A file is a container used to store data in a computer. Files are stored on a computer's storage device.</div>
+<p>File contents may include text, program code, CSV (comma-separated values), pictures, audio/video and web pages.</p>
+<h3>School example: two separate files</h3><div class="grid">
+<div class="tile"><h4>STUDENT file</h4><p>RollNumber, SName, SDateofBirth, GName, GPhone, GAddress</p></div>
+<div class="tile"><h4>ATTENDANCE file</h4><p>AttendanceDate, RollNumber, SName, AttendanceStatus</p></div></div>
+<p>To display a monthly attendance report, a programmer may need to write a program to access and combine information from files.</p>
+<h3>Example STUDENT file</h3><table><tr><th>Roll no.</th><th>Name</th><th>DOB</th><th>Guardian</th></tr><tr><td>1</td><td>Atharv Ahuja</td><td>2003-05-15</td><td>Amit Ahuja</td></tr><tr><td>2</td><td>Daizy Bhutia</td><td>2002-02-28</td><td>Baichung Bhutia</td></tr><tr><td>3</td><td>Taleem Shah</td><td>2002-02-28</td><td>Himanshu Shah</td></tr></table>
+<h3>Example ATTENDANCE file</h3><table><tr><th>Date</th><th>Roll no.</th><th>Name</th><th>Status</th></tr><tr><td>01-09</td><td>1</td><td>Atharv Ahuja</td><td>P</td></tr><tr><td>01-09</td><td>2</td><td>Daizy Bhutia</td><td>P</td></tr><tr><td>01-09</td><td>3</td><td>Taleem Shah</td><td>A</td></tr></table>
+</section>
+
+<section class="section" id="limits"><h2>7.2.1 Limitations of a File System</h2>
+<figure class="visual-panel"><div class="visual-title">SIX LIMITATIONS OF FILE SYSTEM — VISUAL MEMORY MAP</div>
+<svg viewBox="0 0 720 220" role="img" aria-label="Six file system limitations: difficulty in access, redundancy, inconsistency, isolation, dependence and controlled sharing">
+<g font-family="Arial" text-anchor="middle">
+<g transform="translate(5 12)"><rect width="110" height="150" rx="12" fill="#fff1ed" stroke="#e99a86"/><circle cx="55" cy="35" r="20" fill="#d96e58"/><text x="55" y="42" font-size="22" fill="white">?</text><text x="55" y="78" font-size="12" font-weight="bold" fill="#9a4434">Difficulty</text><text x="55" y="95" font-size="12" fill="#9a4434">in Access</text><text x="55" y="124" font-size="10" fill="#704b45">Hard to find</text></g>
+<g transform="translate(125 12)"><rect width="110" height="150" rx="12" fill="#fff6e8" stroke="#e6bf75"/><circle cx="55" cy="35" r="20" fill="#d58b24"/><text x="55" y="42" font-size="19" fill="white">×2</text><text x="55" y="78" font-size="12" font-weight="bold" fill="#a76b12">Data</text><text x="55" y="95" font-size="12" fill="#a76b12">Redundancy</text><text x="55" y="124" font-size="10" fill="#805c25">Duplicate</text></g>
+<g transform="translate(245 12)"><rect width="110" height="150" rx="12" fill="#fff1ed" stroke="#e99a86"/><circle cx="55" cy="35" r="20" fill="#d96e58"/><text x="55" y="42" font-size="22" fill="white">≠</text><text x="55" y="78" font-size="12" font-weight="bold" fill="#9a4434">Data</text><text x="55" y="95" font-size="12" fill="#9a4434">Inconsistency</text><text x="55" y="124" font-size="10" fill="#704b45">Mismatch</text></g>
+<g transform="translate(365 12)"><rect width="110" height="150" rx="12" fill="#f2edff" stroke="#b6a1e8"/><circle cx="55" cy="35" r="20" fill="#8064bd"/><text x="55" y="42" font-size="22" fill="white">↔</text><text x="55" y="78" font-size="12" font-weight="bold" fill="#6546a5">Data</text><text x="55" y="95" font-size="12" fill="#6546a5">Isolation</text><text x="55" y="124" font-size="10" fill="#6546a5">Unlinked files</text></g>
+<g transform="translate(485 12)"><rect width="110" height="150" rx="12" fill="#e9efff" stroke="#91a7ed"/><circle cx="55" cy="35" r="20" fill="#3157d5"/><text x="55" y="42" font-size="20" fill="white">⚙</text><text x="55" y="78" font-size="12" font-weight="bold" fill="#294bb6">Data</text><text x="55" y="95" font-size="12" fill="#294bb6">Dependence</text><text x="55" y="124" font-size="10" fill="#40567e">Program tied</text></g>
+<g transform="translate(605 12)"><rect width="110" height="150" rx="12" fill="#e8faf7" stroke="#63b9ae"/><circle cx="55" cy="35" r="20" fill="#0e9b91"/><text x="55" y="42" font-size="19" fill="white">🔒</text><text x="55" y="78" font-size="12" font-weight="bold" fill="#087e70">Controlled</text><text x="55" y="95" font-size="12" fill="#087e70">Sharing</text><text x="55" y="124" font-size="10" fill="#326d68">Access limits</text></g>
+</g><text x="360" y="198" text-anchor="middle" font-size="12" fill="#60708b">Exam method: write each heading + definition + one school-based example.</text></svg></figure>
+<p class="lead">Learn these six headings. In exams, write the meaning and one suitable example for each.</p>
+<div class="grid">
+<div class="tile"><h4>1. Difficulty in Access</h4><p>Files do not provide a built-in mechanism to retrieve data. Application programs must be written. Unexpected search requirements can be difficult to handle.</p><p><b>Example:</b> Finding all students absent on a particular date needs a program.</p></div>
+<div class="tile"><h4>2. Data Redundancy</h4><p>The same data is duplicated in different files. This wastes storage.</p><p><b>Example:</b> Student name and guardian details appear in both STUDENT and ATTENDANCE files.</p></div>
+<div class="tile"><h4>3. Data Inconsistency</h4><p>Same data stored in different places does not match after an incomplete update.</p><p><b>Example:</b> A student's name is corrected in STUDENT but not in ATTENDANCE.</p></div>
+<div class="tile"><h4>4. Data Isolation</h4><p>Related data is kept in separate files without proper links. Different formats make combined retrieval difficult.</p><p><b>Example:</b> Student details and attendance are maintained separately.</p></div>
+<div class="tile"><h4>5. Data Dependence</h4><p>Programs depend on the file's structure or format. If the structure changes, all programs using it may need changes.</p><p><b>Example:</b> Adding a field to a file may require modifying existing programs.</p></div>
+<div class="tile"><h4>6. Controlled Data Sharing</h4><p>It is difficult to provide different access permissions to different users.</p><p><b>Example:</b> Parents may view attendance, but only teachers should update it.</p></div>
+</div>
+<div class="callout warn"><b>Memory trick:</b> D-D-D-D-D-C → Difficulty, Data Redundancy, Data Inconsistency, Data Isolation, Data Dependence, Controlled Data Sharing.</div>
+</section>
+
+<section class="section" id="dbms"><h2>7.3 Database Management System (DBMS)</h2>
+<div class="callout"><b>Definition:</b> A DBMS is software used to create and manage databases. It allows users or application programs to store, retrieve, update, modify and delete data.</div>
+<p>A database is an organised collection of logically related data. DBMS acts as an interface between the database and users/application programs.</p>
+<div class="diagram"><div class="db">Teacher / Office staff</div><span class="arrow">↕ Query / result</span><div class="db">DBMS software</div><span class="arrow">↕</span><div class="db">Database<br>STUDENT · GUARDIAN · ATTENDANCE</div></div>
+<p><b>Querying</b> means retrieving data from a database using a special type of command. Users can also modify the database structure through a DBMS.</p>
+<h3>Examples of DBMS</h3><div class="grid"><div class="tile">MySQL</div><div class="tile">Oracle</div><div class="tile">PostgreSQL</div><div class="tile">SQL Server</div><div class="tile">Microsoft Access</div><div class="tile">MongoDB</div></div>
+<h3>Real-life applications</h3><table><tr><th>Application</th><th>Data maintained</th></tr><tr><td>Banking</td><td>Customer, account, loan and transaction details</td></tr><tr><td>Crop loan</td><td>Farmer, land, cultivation and repayment details</td></tr><tr><td>Inventory management</td><td>Product, customer, order and delivery details</td></tr><tr><td>Organisation resource management</td><td>Employee, salary, department and branch details</td></tr><tr><td>Online shopping</td><td>Items, login details, user preferences and orders</td></tr></table>
+<h3>File System → DBMS: what changes?</h3><ul><li>Related data is organised into linked tables.</li><li>Repeated student names need not be stored in every table.</li><li>A unique Guardian ID (GUID) identifies a guardian.</li><li>RollNumber links attendance to a student.</li></ul>
+<h3>Costs / limitations of DBMS</h3><ul><li>Increased complexity to maintain security, consistency, sharing and integrity.</li><li>Increased data vulnerability because data is stored centrally; hardware/software failure may affect many users.</li><li>High setup and maintenance cost: hardware/software, user training, backups and recovery.</li></ul>
+</section>
+
+<section class="section" id="schema">
+<div class="visual-pair">
+<div class="visual-card"><h4>🏗️ Schema = Design</h4><svg viewBox="0 0 310 130" role="img" aria-label="Empty student table design"><rect x="10" y="10" width="290" height="110" rx="8" fill="white" stroke="#3157d5" stroke-width="2"/><rect x="10" y="10" width="290" height="28" rx="7" fill="#3157d5"/><text x="155" y="29" text-anchor="middle" fill="white" font-size="12" font-weight="bold">STUDENT TABLE STRUCTURE</text><path d="M10 70 H300 M10 94 H300 M105 38 V120 M202 38 V120" stroke="#b9c8e2"/><g fill="#60708b" font-size="11" text-anchor="middle"><text x="57" y="59">RollNo</text><text x="153" y="59">Name</text><text x="250" y="59">Class</text></g></svg><p>Like a blank form: defines columns and rules.</p></div>
+<div class="visual-card"><h4>📸 Instance = Actual data</h4><svg viewBox="0 0 310 130" role="img" aria-label="Filled student table representing a database instance"><rect x="10" y="10" width="290" height="110" rx="8" fill="white" stroke="#0e9b91" stroke-width="2"/><rect x="10" y="10" width="290" height="28" rx="7" fill="#0e9b91"/><text x="155" y="29" text-anchor="middle" fill="white" font-size="12" font-weight="bold">STUDENT TABLE DATA</text><path d="M10 70 H300 M10 94 H300 M105 38 V120 M202 38 V120" stroke="#b9c8e2"/><g fill="#263b69" font-size="11" text-anchor="middle"><text x="57" y="59">RollNo</text><text x="153" y="59">Name</text><text x="250" y="59">Class</text><text x="57" y="87">01</text><text x="153" y="87">Aarav</text><text x="250" y="87">XI</text><text x="57" y="111">02</text><text x="153" y="111">Diya</text><text x="250" y="111">XI</text></g></svg><p>Like a filled-in form: snapshot at a particular time.</p></div></div>
+<h2>Database terms in 7.3</h2>
+<div class="grid">
+<div class="tile"><h4>Database Schema</h4><p>The design or logical structure of a database. It describes tables, attributes, data types, constraints and relationships.</p></div>
+<div class="tile"><h4>Data Constraint</h4><p>A restriction on the type or values of data allowed in a column. Example: RollNumber must be unique and not NULL.</p></div>
+<div class="tile"><h4>Metadata / Data Dictionary</h4><p>Data about data. DBMS stores schema and constraints in a database catalog/data dictionary.</p></div>
+<div class="tile"><h4>Database Instance</h4><p>The actual data or snapshot of the database at a particular time. It changes when data is inserted, updated or deleted.</p></div>
+<div class="tile"><h4>Query</h4><p>A request to a database to obtain information in a desired way. Example: Find students present on a given date.</p></div>
+<div class="tile"><h4>Data Manipulation</h4><p>Three operations: INSERT (add), DELETE (remove), UPDATE (modify) records.</p></div>
+<div class="tile"><h4>Database Engine</h4><p>The underlying component/programs used by a DBMS to create databases and handle queries and data operations.</p></div>
+</div>
+<h3>Schema vs Instance</h3><table><tr><th>Schema</th><th>Instance</th></tr><tr><td>Design / structure of database</td><td>Actual data at a particular time</td></tr><tr><td>Changes rarely</td><td>Changes frequently</td></tr><tr><td>Like a blank form design</td><td>Like the filled-in form</td></tr></table>
+
+<figure class="visual-panel"><div class="visual-title">INSERT · UPDATE · DELETE</div>
+<svg viewBox="0 0 690 135" role="img" aria-label="Insert adds a record, update modifies it, delete removes it">
+<g text-anchor="middle"><rect x="12" y="10" width="205" height="110" rx="13" fill="#e8faf7" stroke="#63b9ae" stroke-width="2"/><circle cx="114" cy="40" r="18" fill="#0e9b91"/><path d="M114 29 V51 M103 40 H125" stroke="white" stroke-width="3"/><text x="114" y="80" font-size="16" font-weight="bold" fill="#087e70">INSERT</text><text x="114" y="101" font-size="11" fill="#326d68">Add a new record</text>
+<rect x="242" y="10" width="205" height="110" rx="13" fill="#e9efff" stroke="#91a7ed" stroke-width="2"/><circle cx="344" cy="40" r="18" fill="#3157d5"/><path d="M335 48 L353 30" stroke="white" stroke-width="4"/><text x="344" y="80" font-size="16" font-weight="bold" fill="#294bb6">UPDATE</text><text x="344" y="101" font-size="11" fill="#40567e">Modify existing data</text>
+<rect x="472" y="10" width="205" height="110" rx="13" fill="#fff1ed" stroke="#e99a86" stroke-width="2"/><circle cx="574" cy="40" r="18" fill="#d96e58"/><path d="M564 40 H584" stroke="white" stroke-width="4"/><text x="574" y="80" font-size="16" font-weight="bold" fill="#9a4434">DELETE</text><text x="574" y="101" font-size="11" fill="#704b45">Remove a record</text></g></svg></figure>
+<h3>Three data manipulation operations</h3><div class="grid"><div class="tile"><span class="tag">INSERT</span><p>Add a new student's record.</p></div><div class="tile"><span class="tag">DELETE</span><p>Remove a student who leaves school.</p></div><div class="tile"><span class="tag">UPDATE</span><p>Change a guardian's phone number.</p></div></div>
+</section>
+
+<section class="section" id="relational">
+<figure class="visual-panel"><div class="visual-title">RELATION = TABLE · ATTRIBUTE = COLUMN · TUPLE = ROW</div>
+<svg viewBox="0 0 700 260" role="img" aria-label="Student relation with three rows and four columns showing degree four and cardinality three">
+<rect x="25" y="40" width="650" height="174" rx="10" fill="white" stroke="#b9c8e2" stroke-width="2"/><rect x="25" y="40" width="650" height="42" rx="9" fill="#263b69"/><g fill="white" font-size="14" font-weight="bold" text-anchor="middle"><text x="105" y="66">RollNo</text><text x="265" y="66">Name</text><text x="425" y="66">Class</text><text x="585" y="66">Section</text></g><g stroke="#dce4f1"><path d="M185 40 V214 M345 40 V214 M505 40 V214 M25 126 H675 M25 170 H675"/></g><g fill="#263b69" font-size="13" text-anchor="middle"><text x="105" y="109">11</text><text x="265" y="109">Mohan</text><text x="425" y="109">XI</text><text x="585" y="109">A</text><text x="105" y="153">12</text><text x="265" y="153">Sohan</text><text x="425" y="153">XI</text><text x="585" y="153">B</text><text x="105" y="197">13</text><text x="265" y="197">Meena</text><text x="425" y="197">XI</text><text x="585" y="197">A</text></g><path d="M25 28 V18 H675 V28" stroke="#0e9b91" stroke-width="3" fill="none"/><text x="350" y="14" text-anchor="middle" font-size="11" fill="#087e70">Whole table = RELATION</text><text x="350" y="242" text-anchor="middle" font-size="12" fill="#60708b">4 columns = Degree 4  |  3 rows = Cardinality 3</text></svg><figcaption>Degree means count the columns. Cardinality means count the rows.</figcaption></figure>
+<h2>7.4 Relational Data Model</h2>
+<p>A data model describes how data is defined, represented, related and constrained. The most commonly used model is the <b>Relational Data Model</b>.</p>
+<p>Other models mentioned in the textbook: object-oriented, entity-relationship, document and hierarchical data models.</p>
+<div class="callout"><b>Relational model:</b> Data is stored in tables called <b>relations</b>. Tables are connected through common attributes/fields.</div>
+<h3>School database: three related relations</h3>
+<div class="grid">
+<div class="tile"><h4>GUARDIAN</h4><p>GUID · GName · GPhone · GAddress</p></div>
+<div class="tile"><h4>STUDENT</h4><p>RollNumber · SName · SDateofBirth · GUID</p></div>
+<div class="tile"><h4>ATTENDANCE</h4><p>AttendanceDate · RollNumber · AttendanceStatus</p></div></div>
+<p>STUDENT.GUID connects a student to GUARDIAN.GUID. ATTENDANCE.RollNumber connects an attendance record to STUDENT.RollNumber.</p>
+<h3>Relational terminology</h3>
+<table><tr><th>Term</th><th>Meaning</th><th>Easy way to remember</th></tr>
+<tr><td>Relation</td><td>A table storing related data.</td><td>Whole table</td></tr>
+<tr><td>Attribute</td><td>A column / field; a characteristic of an entity.</td><td>Column</td></tr>
+<tr><td>Tuple</td><td>A row / record in a relation.</td><td>Row</td></tr>
+<tr><td>Domain</td><td>Set of permitted values for an attribute.</td><td>Allowed values</td></tr>
+<tr><td>Degree</td><td>Number of attributes (columns) in a relation.</td><td>Count columns</td></tr>
+<tr><td>Cardinality</td><td>Number of tuples (rows) in a relation.</td><td>Count rows</td></tr></table>
+<h3>Worked example</h3><table><tr><th>GUID</th><th>GName</th><th>GPhone</th><th>GAddress</th></tr><tr><td>4444</td><td>Amit Ahuja</td><td>5711492685</td><td>Delhi</td></tr><tr><td>1111</td><td>Baichung Bhutia</td><td>3612967082</td><td>Shimla</td></tr><tr><td>1010</td><td>Himanshu Shah</td><td>4726309212</td><td>Ahmedabad</td></tr><tr><td>3333</td><td>Danny Dsouza</td><td>—</td><td>Daman</td></tr><tr><td>4664</td><td>Sujata P.</td><td>3801923168</td><td>Madurai</td></tr></table>
+<div class="callout"><b>Degree = 4</b> (GUID, GName, GPhone, GAddress). <b>Cardinality = 5</b> (five rows).</div>
+</section>
+
+<section class="section" id="properties"><h2>7.4.1 Three Important Properties of a Relation</h2>
+<h3>Property 1 – Attributes / columns</h3><ul><li>Each attribute in a relation has a unique name.</li><li>Sequence/order of attributes is immaterial.</li></ul>
+<h3>Property 2 – Tuples / rows</h3><ul><li>Each tuple is distinct; no two rows should be identical in all attributes.</li><li>Sequence/order of tuples is immaterial.</li></ul>
+<h3>Property 3 – Values in a relation</h3><ul><li>Values in one attribute must belong to the same domain/data type.</li><li>Each value must be atomic (indivisible into meaningful subparts).</li><li>An attribute cannot store multiple values in one cell.</li><li><b>NULL</b> represents an unknown or non-applicable value.</li></ul>
+<div class="grid"><div class="tile"><h4>Atomic value ✓</h4><p>GPhone = 9876543210</p><p>One phone number in one cell.</p></div><div class="tile"><h4>Non-atomic / multiple values ✗</h4><p>GPhone = 9876, 5432</p><p>Two phone numbers in one cell.</p></div><div class="tile"><h4>NULL</h4><p>Phone number not provided / unknown.</p></div></div>
+</section>
+
+<section class="section" id="keys">
+<figure class="visual-panel"><div class="visual-title">FIVE TYPES OF KEYS — VISUAL SUMMARY</div>
+<svg viewBox="0 0 740 245" role="img" aria-label="Candidate key selection leads to primary key and alternate key; composite key combines fields; foreign key links tables">
+<rect x="8" y="12" width="205" height="76" rx="12" fill="#e9efff" stroke="#91a7ed" stroke-width="2"/><text x="110" y="39" text-anchor="middle" font-size="15" font-weight="bold" fill="#294bb6">CANDIDATE KEYS</text><text x="110" y="62" text-anchor="middle" font-size="12" fill="#40567e">GUID · GPhone</text>
+<path d="M215 50 H260" stroke="#3157d5" stroke-width="3"/><path d="M252 43 L263 50 L252 57" stroke="#3157d5" stroke-width="3" fill="none"/>
+<rect x="270" y="12" width="205" height="76" rx="12" fill="#e8faf7" stroke="#63b9ae" stroke-width="2"/><text x="372" y="39" text-anchor="middle" font-size="15" font-weight="bold" fill="#087e70">PRIMARY KEY</text><text x="372" y="62" text-anchor="middle" font-size="12" fill="#326d68">GUID selected</text>
+<path d="M477 50 H522" stroke="#d58b24" stroke-width="3"/><path d="M514 43 L525 50 L514 57" stroke="#d58b24" stroke-width="3" fill="none"/>
+<rect x="532" y="12" width="200" height="76" rx="12" fill="#fff6e8" stroke="#e6bf75" stroke-width="2"/><text x="632" y="39" text-anchor="middle" font-size="15" font-weight="bold" fill="#a76b12">ALTERNATE KEY</text><text x="632" y="62" text-anchor="middle" font-size="12" fill="#805c25">GPhone not selected</text>
+<rect x="38" y="125" width="300" height="100" rx="12" fill="#fff1ed" stroke="#e99a86" stroke-width="2"/><text x="188" y="151" text-anchor="middle" font-size="15" font-weight="bold" fill="#9a4434">COMPOSITE PRIMARY KEY</text><rect x="65" y="170" width="105" height="35" rx="6" fill="#d96e58"/><text x="117" y="192" text-anchor="middle" fill="white" font-size="12">Date</text><text x="188" y="194" text-anchor="middle" fill="#9a4434" font-size="18">+</text><rect x="210" y="170" width="105" height="35" rx="6" fill="#d96e58"/><text x="262" y="192" text-anchor="middle" fill="white" font-size="12">RollNo</text>
+<rect x="400" y="125" width="300" height="100" rx="12" fill="#f2edff" stroke="#b6a1e8" stroke-width="2"/><text x="550" y="151" text-anchor="middle" font-size="15" font-weight="bold" fill="#6546a5">FOREIGN KEY</text><rect x="420" y="170" width="105" height="35" rx="6" fill="#8064bd"/><text x="472" y="192" text-anchor="middle" fill="white" font-size="12">STUDENT</text><path d="M528 187 H570" stroke="#8064bd" stroke-width="3"/><path d="M563 180 L573 187 L563 194" stroke="#8064bd" stroke-width="3" fill="none"/><rect x="580" y="170" width="100" height="35" rx="6" fill="#8064bd"/><text x="630" y="192" text-anchor="middle" fill="white" font-size="12">GUARDIAN</text>
+</svg><figcaption>Candidate = possible choice · Primary = selected · Alternate = not selected · Composite = combined columns · Foreign = link.</figcaption></figure>
+<h2>7.5 Keys in a Relational Database</h2>
+<p>Keys help uniquely identify records and establish relationships between tables.</p>
+<div class="callout">A relation must have a way to distinguish each tuple. A key uses one or more attributes for this purpose.</div>
+<h3>1. Candidate Key</h3><p>One or more attributes that can uniquely identify every tuple. Each candidate key is a possible choice for the primary key.</p><p><b>Example:</b> In GUARDIAN, GUID and GPhone are both unique, so both can be candidate keys.</p>
+<h3>2. Primary Key</h3><p>The candidate key selected by the database designer to uniquely identify tuples. It must be unique and cannot be NULL.</p><p><b>Example:</b> If GUID is selected, GUID is the primary key and GPhone becomes an alternate key.</p>
+<h3>3. Alternate Key</h3><p>Candidate key(s) not selected as the primary key.</p>
+<h3>4. Composite Primary Key</h3><p>A primary key made of two or more attributes when no single attribute can uniquely identify a record.</p><p><b>Example:</b> In ATTENDANCE, RollNumber repeats on different dates and AttendanceDate repeats for different students. Together, (AttendanceDate, RollNumber) uniquely identifies one attendance entry.</p>
+<h3>5. Foreign Key</h3><p>An attribute in one (referencing) relation that refers to the primary key of another (referenced) relation. It creates a relationship between tables. A foreign key may be NULL if it is not part of the primary key.</p>
+<div class="diagram"><div class="db">GUARDIAN<br><u>GUID (Primary Key)</u></div><span class="arrow">←</span><div class="db">STUDENT<br><u>RollNumber (PK)</u><br>GUID (Foreign Key)</div><span class="arrow">←</span><div class="db">ATTENDANCE<br>AttendanceDate + RollNumber (Composite PK)<br>RollNumber (FK)</div></div>
+<table><tr><th>Key type</th><th>Question it answers</th><th>Example</th></tr><tr><td>Candidate</td><td>Which attributes could uniquely identify a row?</td><td>GUID, GPhone</td></tr><tr><td>Primary</td><td>Which candidate key was selected?</td><td>GUID</td></tr><tr><td>Alternate</td><td>Which candidate key was not selected?</td><td>GPhone</td></tr><tr><td>Composite</td><td>Which combination identifies a row?</td><td>AttendanceDate + RollNumber</td></tr><tr><td>Foreign</td><td>Which field links to another table?</td><td>STUDENT.GUID → GUARDIAN.GUID</td></tr></table>
+<div class="callout warn"><b>Exam tip:</b> Do not confuse a primary key with a foreign key. Primary key identifies a row in its own table; foreign key refers to a primary key in another table.</div>
+</section>
+
+<section class="section" id="revision"><h2>One-page revision sheet</h2>
+
+<div class="grid">
+<div class="tile"><span class="tag">TABLE</span><h4>Relation</h4><p>Complete table of related data.</p></div>
+<div class="tile"><span class="tag">COLUMN</span><h4>Attribute</h4><p>A feature or property.</p></div>
+<div class="tile"><span class="tag">ROW</span><h4>Tuple</h4><p>One complete record.</p></div>
+<div class="tile"><span class="tag">COLUMN COUNT</span><h4>Degree</h4><p>Number of attributes.</p></div>
+<div class="tile"><span class="tag">ROW COUNT</span><h4>Cardinality</h4><p>Number of tuples.</p></div>
+<div class="tile"><span class="tag">ALLOWED VALUES</span><h4>Domain</h4><p>Permitted values for an attribute.</p></div>
+</div>
+<table><tr><th>Question / keyword</th><th>Answer to remember</th></tr>
+<tr><td>File</td><td>Container to store data in a computer.</td></tr><tr><td>DBMS</td><td>Software to create and manage databases.</td></tr><tr><td>Database</td><td>Collection of logically related data / organised tables.</td></tr><tr><td>Schema</td><td>Design or structure of a database.</td></tr><tr><td>Instance</td><td>Snapshot/state of a database at a given time.</td></tr><tr><td>Metadata</td><td>Data about data.</td></tr><tr><td>Query</td><td>Request for information from a database.</td></tr><tr><td>Data manipulation</td><td>Insertion, deletion and update.</td></tr><tr><td>Relation / Attribute / Tuple</td><td>Table / Column / Row.</td></tr><tr><td>Degree / Cardinality</td><td>Number of columns / Number of rows.</td></tr><tr><td>Domain</td><td>Set of permitted values for an attribute.</td></tr><tr><td>NULL</td><td>Unknown or non-applicable value.</td></tr><tr><td>Primary key</td><td>Selected unique identifier; cannot be NULL.</td></tr><tr><td>Foreign key</td><td>Field referring to another table's primary key.</td></tr></table>
+</section>
+
+
+<section class="section" id="case-study"><h2>Visual Case Study: Student Attendance Database</h2>
+<p class="lead">This one diagram combines the textbook's STUDENT, GUARDIAN and ATTENDANCE relations.</p>
+<figure class="visual-panel"><div class="visual-title">HOW THE THREE TABLES ARE CONNECTED</div>
+<svg viewBox="0 0 720 190" role="img" aria-label="Guardian table connects to Student using GUID and Student connects to Attendance using RollNumber">
+<rect x="8" y="20" width="190" height="120" rx="12" fill="#e8faf7" stroke="#63b9ae" stroke-width="2"/><text x="103" y="46" text-anchor="middle" font-size="15" font-weight="bold" fill="#087e70">GUARDIAN</text><text x="103" y="73" text-anchor="middle" font-size="12" fill="#326d68">GUID (PK)</text><text x="103" y="94" text-anchor="middle" font-size="12" fill="#326d68">GName · GPhone</text><text x="103" y="115" text-anchor="middle" font-size="12" fill="#326d68">GAddress</text>
+<rect x="265" y="20" width="190" height="120" rx="12" fill="#e9efff" stroke="#91a7ed" stroke-width="2"/><text x="360" y="46" text-anchor="middle" font-size="15" font-weight="bold" fill="#294bb6">STUDENT</text><text x="360" y="73" text-anchor="middle" font-size="12" fill="#40567e">RollNumber (PK)</text><text x="360" y="94" text-anchor="middle" font-size="12" fill="#40567e">SName · DateOfBirth</text><text x="360" y="115" text-anchor="middle" font-size="12" fill="#40567e">GUID (FK)</text>
+<rect x="522" y="20" width="190" height="120" rx="12" fill="#fff6e8" stroke="#e6bf75" stroke-width="2"/><text x="617" y="46" text-anchor="middle" font-size="15" font-weight="bold" fill="#a76b12">ATTENDANCE</text><text x="617" y="73" text-anchor="middle" font-size="12" fill="#805c25">AttendanceDate</text><text x="617" y="94" text-anchor="middle" font-size="12" fill="#805c25">RollNumber (FK)</text><text x="617" y="115" text-anchor="middle" font-size="12" fill="#805c25">AttendanceStatus</text>
+<path d="M198 80 H265 M455 80 H522" stroke="#3157d5" stroke-width="3"/><path d="M256 73 L266 80 L256 87 M513 73 L523 80 L513 87" fill="none" stroke="#3157d5" stroke-width="3"/><text x="231" y="68" text-anchor="middle" font-size="10" fill="#3157d5">GUID</text><text x="488" y="68" text-anchor="middle" font-size="10" fill="#3157d5">RollNo</text><text x="360" y="174" text-anchor="middle" font-size="12" fill="#60708b">PK = Primary Key · FK = Foreign Key</text></svg></figure>
+<table><tr><th>Relation</th><th>Primary key</th><th>Foreign key</th></tr><tr><td>GUARDIAN</td><td>GUID</td><td>—</td></tr><tr><td>STUDENT</td><td>RollNumber</td><td>GUID → GUARDIAN</td></tr><tr><td>ATTENDANCE</td><td>AttendanceDate + RollNumber</td><td>RollNumber → STUDENT</td></tr></table>
+<div class="callout"><b>Think like a database designer:</b> Student details are stored in STUDENT, guardian details in GUARDIAN and daily attendance in ATTENDANCE. Keys connect the records without repeatedly storing all details.</div>
+</section>
+<section class="section" id="practice"><h2>Quick understanding test</h2><p class="lead">Choose an answer and click Check. The test gives instant feedback.</p>
+<div id="quiz"></div><button class="teal" onclick="scoreQuiz()">Check all answers</button> <button class="secondary" onclick="resetQuiz()">Try again</button><p id="score" aria-live="polite"></p>
+</section>
+
+<section class="section" id="bookback"><h2>Book-back: visible exercise questions with answers</h2>
+<p class="lead">These are concise, exam-ready answers based on the readable exercise pages you shared. The photographed pages clearly show Q1, Q2 and Q8–Q13; one intervening exercise page is blurred, so I have not invented its question text.</p>
+<h3>1. Give the terms</h3>
+<ol><li>Collection of logically related records – <b>Database</b>.</li><li>DBMS creates a file containing description about data stored in the database – <b>Data dictionary / Database catalog (metadata)</b>.</li><li>Attribute that uniquely identifies tuples – <b>Key</b> (more specifically, a candidate key).</li><li>Special value stored when actual data is unknown – <b>NULL</b>.</li><li>Unique identifying attribute not defined as primary key – <b>Alternate key</b>.</li><li>Software used to create, manipulate and maintain a relational database – <b>DBMS / RDBMS</b>.</li></ol>
+<h3>2. Why can a foreign key have NULL? Give an example.</h3><p>A foreign key may be NULL when a relationship is not yet known or is not applicable, provided that the foreign-key column is not part of the primary key. Example: a student record may temporarily have no guardian ID recorded.</p>
+<h3>8. School canteen database – answer framework</h3><ul><li>Use an ITEM relation such as ITEM(ItemID, ItemName, Price, Calories). ItemID is the primary key; ItemName can be UNIQUE if item names must not repeat; Price should be greater than zero.</li><li>Use a BILL relation such as BILL(BillNo, BillDate, StudentID) and BILL_ITEM(BillNo, ItemID, Quantity). BillNo identifies a bill; (BillNo, ItemID) can be a composite primary key in BILL_ITEM. BillNo and ItemID are foreign keys.</li><li>Store Calories with ITEM because it describes the item, not an individual purchase.</li></ul>
+<h3>9. EMPLOYEE–DEPENDENT database</h3><p>EMPLOYEE(AadharNumber, Name, Address, Department, EmployeeID): likely candidate keys are AadharNumber and EmployeeID if both are unique. DEPENDENT(EmployeeID, DependentName, Relationship): EmployeeID refers to EMPLOYEE. The degree of EMPLOYEE is <b>5</b>; the degree of DEPENDENT is <b>3</b>.</p>
+<h3>10. School uniform database – insertion checks</h3><ul><li>UNIFORM(UCode, UName, UColor): UCode is primary key; UName is NOT NULL.</li><li>(7, Handkerchief, NULL): allowed if UCode is new and UName is supplied; UColor may be NULL because no NOT NULL constraint is shown.</li><li>(4, Ribbon, Red): rejected because UCode 4 already exists (primary key duplicate).</li><li>(NULL, 8, White): rejected because primary key UCode cannot be NULL (and the tuple's values do not match the stated three-column structure).</li><li>COST(UCode, Size, Price): composite primary key (UCode, Size); Price &gt; 0. Duplicate combinations are rejected; price must be positive.</li></ul>
+<h3>11. Multiplex MOVIE and AUDI</h3><p>MOVIE_ID can be the primary key of MOVIE if each movie has one unique ID. AUDI should use a composite primary key such as (Movie_ID, AudiNo), because one movie can be shown in more than one auditorium and an auditorium can screen different movies. AUDI.Movie_ID is a foreign key referencing MOVIE.Movie_ID.</p>
+<h3>12. STUDENT–PROJECT database</h3><ul><li>Primary keys: STUDENT – RollNo; PROJECT – ProjectNo; PROJECT_ASSIGNED – Registration_ID (or the composite key if the design permits multiple assignments per registration).</li><li>Foreign keys in PROJECT_ASSIGNED: Registration_ID references STUDENT.Registration_ID; ProjectNo references PROJECT.ProjectNo.</li><li>Registration_ID in STUDENT appears unique in the shown data, so it can be an alternate key.</li><li>Duplicate RollNo cannot be assigned because RollNo is the primary key.</li></ul>
+<h3>13. Can these records be inserted?</h3><ul><li>Student record with missing RollNo – <b>No</b>, primary key cannot be NULL.</li><li>Student record with missing Registration_ID – <b>Yes only if</b> Registration_ID is not defined as NOT NULL / primary key / required foreign key; the shown table alone does not establish a NOT NULL constraint.</li><li>Project detail without SubmissionDate – <b>Yes only if</b> SubmissionDate allows NULL or has a default value.</li><li>PROJECT_ASSIGNED record with Registration_ID IP-101-19 and ProjectNo 206 – <b>No</b> if either referenced value does not exist in the parent tables; foreign-key values must match existing referenced keys.</li></ul>
+<div class="callout warn"><b>Important:</b> Some exercise text in the uploaded photos (especially the page between Q2 and Q8) is blurred/cut off. The answers above cover the readable questions; share a clearer photo of that page if you want exact answers to every sub-question.</div>
+</section>
+</main></div>
+<footer>Class XI Informatics Practices · Chapter 7: Database Concepts · Use the browser Print option to save a PDF.</footer>
+<script>
+const questions=[
+{q:"A file in a computer is best described as:",o:["A software to manage databases","A container to store data","A database key","A row in a table"],a:1,e:"A file is a container used to store data in a computer."},
+{q:"The same student name stored in two different files is an example of:",o:["Data isolation","Data redundancy","Data dependence","Data sharing"],a:1,e:"Redundancy means duplication of the same data."},
+{q:"If a name is corrected in one file but not another, it causes:",o:["Data inconsistency","Data domain","Data atomicity","Data schema"],a:0,e:"The copies no longer match, so the data is inconsistent."},
+{q:"Which software creates and manages databases?",o:["Compiler","Operating system","DBMS","Web browser"],a:2,e:"DBMS stands for Database Management System."},
+{q:"The design or logical structure of a database is its:",o:["Instance","Schema","Tuple","Query"],a:1,e:"Schema describes the database structure."},
+{q:"A request to obtain information from a database is called:",o:["Domain","Query","Degree","Cardinality"],a:1,e:"A query requests information from a database."},
+{q:"The number of columns in a relation is its:",o:["Cardinality","Degree","Tuple","Domain"],a:1,e:"Degree counts attributes/columns."},
+{q:"The number of rows in a relation is its:",o:["Degree","Schema","Cardinality","Metadata"],a:2,e:"Cardinality counts tuples/rows."},
+{q:"A row in a relation is called a:",o:["Attribute","Tuple","Domain","Schema"],a:1,e:"Tuple means a row or record."},
+{q:"Which key links two relations?",o:["Alternate key","Foreign key","Candidate key","Composite key"],a:1,e:"A foreign key refers to a primary key in another relation."},
+{q:"In ATTENDANCE, a suitable composite primary key is:",o:["RollNumber only","AttendanceDate only","AttendanceDate + RollNumber","Student name + status"],a:2,e:"The same student has many dates; the same date has many students. Together they identify one attendance entry."},
+{q:"Which value represents unknown or non-applicable data?",o:["Zero","Blank space always","NULL","False"],a:2,e:"NULL represents an unknown or non-applicable value."},
+{q:"Which is NOT a data manipulation operation described in the chapter?",o:["Insertion","Deletion","Update","Compilation"],a:3,e:"The three operations are insertion, deletion and update."},
+{q:"If GUID is selected as the primary key and GPhone is also unique, GPhone is:",o:["Foreign key","Alternate key","Composite key","Tuple"],a:1,e:"An unselected candidate key is an alternate key."},
+{q:"A primary key must be:",o:["Duplicate and nullable","Unique and not NULL","Always text","A foreign key"],a:1,e:"It uniquely identifies each tuple and cannot be NULL."}
+];
+function renderQuiz(){const root=document.getElementById('quiz');root.innerHTML=questions.map((q,i)=>`<div class="quiz"><p>${i+1}. ${q.q}</p>${q.o.map((x,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${String.fromCharCode(65+j)}. ${x}</label>`).join('')}<div class="feedback" id="f${i}"></div></div>`).join('')}
+function scoreQuiz(){let n=0,answered=0;questions.forEach((q,i)=>{let v=document.querySelector(`input[name="q${i}"]:checked`);let f=document.getElementById('f'+i);if(v){answered++;if(+v.value===q.a){n++;f.style.color='#087e70';f.textContent='Correct! '+q.e}else{f.style.color='#b34b36';f.textContent='Not quite. Correct answer: '+q.o[q.a]+'. '+q.e}}else{f.style.color='#8b6a18';f.textContent='Not answered. Correct answer: '+q.o[q.a]}});document.getElementById('score').textContent=`Score: ${n}/${questions.length} · Answered: ${answered}/${questions.length}`}
+function resetQuiz(){document.querySelectorAll('#quiz input').forEach(x=>x.checked=false);document.querySelectorAll('.feedback').forEach(x=>x.textContent='');document.getElementById('score').textContent=''}
+renderQuiz();
+</script>
+</body></html>

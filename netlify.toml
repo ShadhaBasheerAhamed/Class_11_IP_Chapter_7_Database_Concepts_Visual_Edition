@@ -1,0 +1,7 @@
+[build]
+publish = "."
+
+[[redirects]]
+from = "/"
+to = "/Class_11_IP_Chapter_7_Database_Concepts_Visual_Edition.html"
+status = 200
